@@ -24,21 +24,30 @@ public class Post {
 	@GeneratedValue
 	@Column(name = "post_ID")
 	private Integer postID;
+	
 	@Column(name = "post_Title")
 	private String postTitle;
+	
 	@Column(name = "post_Content")
 	private String postContent;
+	
 	@ManyToOne
     @JoinColumn(name="user_ID", nullable=false)
 	private User postBy;
+	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name = "post_ID")
 	@NotAudited
 	private List<Comment> comments;
+	
 	@ManyToOne
 	@JoinColumn(name = "category_ID", nullable = false)
 	@NotAudited
 	private Category category;
+	
+	@OneToMany(mappedBy="post", cascade=CascadeType.ALL)
+	private List<Image> images;
+	
 	@Transient
 	private RevisionMetadata<Integer> editVersion;
 	
@@ -126,6 +135,19 @@ public class Post {
 	 */
 	public void setEditVersion(RevisionMetadata<Integer> editVersion) {
 		this.editVersion = editVersion;
+	}
+		
+	/**
+	 * @return the images
+	 */
+	public List<Image> getImages() {
+		return images;
+	}
+	/**
+	 * @param images the images to set
+	 */
+	public void setImages(List<Image> images) {
+		this.images = images;
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
