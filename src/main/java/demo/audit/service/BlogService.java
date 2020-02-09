@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import demo.audit.entity.Comment;
+import demo.audit.entity.CommentRepository;
+import demo.audit.entity.Image;
+import demo.audit.entity.ImageRepository;
 import demo.audit.entity.Post;
 import demo.audit.entity.PostRepository;
 import demo.audit.entity.User;
@@ -20,6 +23,10 @@ public class BlogService {
 	private PostRepository postRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private CommentRepository commentRepository;
+	@Autowired
+	private ImageRepository imageRepository;
 	
 	public List<Post> getAllPosts(){
 		return postRepository.findAll();
@@ -70,6 +77,13 @@ public class BlogService {
 
 	public User createNewUser(User user) {
 		return userRepository.save(user);
+	}
+
+	public Image addNewImage(Integer postID, Image image) {
+		Optional<Post> extPost = postRepository.findById(postID);
+		image.setPost(extPost.get());
+		
+		return imageRepository.save(image);
 	}
 	
 }

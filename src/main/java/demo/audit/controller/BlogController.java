@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import demo.audit.entity.Comment;
+import demo.audit.entity.Image;
 import demo.audit.entity.Post;
 import demo.audit.entity.User;
 import demo.audit.service.BlogService;
@@ -48,7 +49,7 @@ public class BlogController {
 		return blogService.editPost(postID, post);
 	}
 	
-	@GetMapping( path="/post/history/{postID}")
+	@GetMapping( path="/post/{postID}/history")
 	public List<Post> getPostEditHistory(@PathVariable Integer postID){
 		return blogService.getPostEditHistory(postID);
 	}
@@ -56,5 +57,10 @@ public class BlogController {
 	@PostMapping( path="/post/{postID}/comment")
 	public List<Comment> creaeNewComment(@PathVariable Integer postID, @RequestBody Comment comment){
 		return blogService.createComment(postID, comment);
+	}
+	
+	@PostMapping( path="/post/{postID}/image")
+	public Image addNewImage(@PathVariable Integer postID, @RequestBody Image image){
+		return blogService.addNewImage(postID, image);
 	}
 }
